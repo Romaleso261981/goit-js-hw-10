@@ -1,8 +1,8 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import fetchCountries from './fetchCountries';
+import debounce from 'lodash.debounce';
 
-var debounce = require('lodash.debounce');
 
 const bodyRef = document.querySelector('body');
 
@@ -14,7 +14,7 @@ const refs = {
 
 const DEBOUNCE_DELAY = 300;
 
-const renderList = countries => {
+function renderList(countries) {
   if (countries.message) return false;
   const markup = countries
     .map(({ flags, name }) => {
@@ -25,11 +25,10 @@ const renderList = countries => {
   refs.ul.innerHTML = markup;
 };
 
-const renderOneCountry = countries => {
+function renderOneCountry(countries) {
   const markup = countries
     .map(({ flags, name, capital, population, languages }) => {
-      return `<h2><img src="${flags.svg}" alt="${name.official}" width= "520"></h2>
-        <p><span>Name: </span>${name.official}</p>
+      return `<h2><img src="${flags.svg}" alt="${name.official}" width= "520">${name.official}</h2>
         <p><span>Capital: </span>${capital[0]}</p>
         <p><span>Population: </span>${population}</p>
         <p><span>Languages: </span>${Object.values(languages).map(lang => lang)}</p>`;
@@ -40,19 +39,18 @@ const renderOneCountry = countries => {
   refs.div.innerHTML = markup;
 };
 
-const searchCountry = e => {
+function searchCountry(e) {
   const serchingCountry = refs.input.value.trim();
-  console.log(refs.input.value);
-  console.log(refs.input.value.trim());
 
   fetchCountries(serchingCountry)
-    .then(countries => {
-      if (countries.length > 10) {
+    .then((serchingCountry) => {
+        console.log("then");
+      if (serchingCountry.length > 10) {
         Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-      } else if (countries.length === 1) renderOneCountry(countries);
-      else renderList(countries);
+      } else if (serchingCountry.length === 1) renderOneCountry(serchingCountry);
+      else renderList(serchingCountry);
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       resetTags();
       Notiflix.Notify.failure('Oops, there is no country with that name');
