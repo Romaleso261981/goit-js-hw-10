@@ -41,10 +41,8 @@ function renderOneCountry(countries) {
 
 function searchCountry(e) {
   const serchingCountry = refs.input.value.trim();
-
   fetchCountries(serchingCountry)
     .then((serchingCountry) => {
-        console.log("then");
       if (serchingCountry.length > 10) {
         Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
       } else if (serchingCountry.length === 1) renderOneCountry(serchingCountry);
