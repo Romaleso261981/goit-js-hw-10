@@ -32,7 +32,7 @@ function renderOneCountry(countries) {
       }</h2>
         <p><span>Capital: </span>${capital[0]}</p>
         <p><span>Population: </span>${population}</p>
-        <p><span>Languages: </span>${Object.values(languages).join(", ")}</p>`;
+        <p><span>Languages: </span>${Object.values(languages).join(', ')}</p>`;
     })
     .join('');
 
@@ -42,22 +42,26 @@ function renderOneCountry(countries) {
 
 function searchCountry(e) {
   const serchingCountry = refs.input.value.trim();
-  fetchCountries(serchingCountry)
-    .then(serchingCountry => {
-      if (serchingCountry.length > 10) {
+  if (serchingCountry === '') {
+    resetTags();
+    return;
+  } else
+    fetchCountries(serchingCountry)
+      .then(serchingCountry => {
+        if (serchingCountry.length > 10) {
+          resetTags();
+          Notiflix.Notify.info(
+            'Too many matches found. Please enter a more specific name.'
+          );
+        } else if (serchingCountry.length === 1)
+          renderOneCountry(serchingCountry);
+        else renderList(serchingCountry);
+      })
+      .catch(error => {
+        console.log(error);
         resetTags();
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (serchingCountry.length === 1)
-        renderOneCountry(serchingCountry);  
-      else renderList(serchingCountry);
-    })
-    .catch(error => {
-      console.log(error);
-      resetTags();
-      Notiflix.Notify.failure('Oops, there is no country with that name');
-    });
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      });
 }
 
 const resetTags = () => {
