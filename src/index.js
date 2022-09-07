@@ -1,4 +1,4 @@
-import './css/styles.css';
+// import './css/styles.css';
 import Notiflix from 'notiflix';
 import fetchCountries from './fetchCountries';
 import renderList from './renderListCountri';

@@ -12,7 +12,7 @@ export default function renderList(countries) {
   }
   
 
- function renderOneCountry(countries) {
+  export default function renderOneCountry(countries) {
     const markup = countries
       .map(({ flags, name, capital, population, languages }) => {
         return `<h2><img src="${flags.svg}" alt="${
