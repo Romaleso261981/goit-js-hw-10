@@ -1,10 +1,10 @@
 // import './css/styles.css';
-import {Notiflix} from 'notiflix';
-import { fetchCountries } from './fetchCountries';
-import {renderList} from './renderListCountri';
-import {renderOneCountry} from './renderListCountri';
-import {resetTags} from './reset';
-import {debounce} from 'lodash.debounce';
+import Notiflix from 'notiflix';
+import fetchCountries from './fetchCountries';
+import renderList from './renderListCountri';
+import renderOneCountry from './renderListCountri';
+import resetTags from './reset';
+import debounce from 'lodash.debounce';
 
 const bodyRef = document.querySelector('body');
 
